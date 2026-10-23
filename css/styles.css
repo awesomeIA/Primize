@@ -30,3 +30,8 @@
   }
 }
 
+/* Destacar la oferta seleccionada */
+.offer-selected {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
