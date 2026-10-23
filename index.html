@@ -442,10 +442,16 @@
       offersList.replaceChildren();
 
       try {
-        const category = selectedCategory === "todas"
-          ? ""
-          : selectedCategory;
+        const categoryMap = {
+          todas: "",
+          gastronomia: "Gastronomia",
+          comercio: "Comercio",
+          experiencias: "Tours/Aventura",
+          servicios: "Servicios",
+        };
 
+        const category = categoryMap[selectedCategory] ?? "";
+        
         const offers = await searchOffers({
           query: searchTerm,
           category,
