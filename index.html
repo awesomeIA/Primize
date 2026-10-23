@@ -392,16 +392,11 @@
     
     function renderMapOffers(offers) {
       offerMarkers.clearLayers();
+      markersByOfferId.clear();
 
       for (const offer of offers) {
         const latitude = Number(offer.latitude);
         const longitude = Number(offer.longitude);
-
-        console.log("Coordenadas de la oferta:", {
-          title: offer.title,
-          latitude: offer.latitude,
-          longitude: offer.longitude,
-        });
 
         if (
           !Number.isFinite(latitude) ||
@@ -418,7 +413,7 @@
           [latitude, longitude],
           { icon: offerMarkerIcon }
         );
-        
+
         const popup = document.createElement("div");
         const title = document.createElement("strong");
         const store = document.createElement("p");
@@ -431,6 +426,12 @@
 
         popup.append(title, store, address);
         marker.bindPopup(popup);
+
+        marker.on("click", () => {
+          highlightOfferCard(offer.id);
+        });
+
+        markersByOfferId.set(String(offer.id), marker);
         offerMarkers.addLayer(marker);
       }
 
@@ -442,6 +443,34 @@
       }
     }
 
+    function highlightOfferCard(offerId) {
+      const cards = offersList.querySelectorAll("[data-offer-id]");
+
+      for (const card of cards) {
+        const isSelected = card.dataset.offerId === String(offerId);
+
+        card.classList.toggle("offer-selected", isSelected);
+
+        if (isSelected) {
+          card.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+          });
+        }
+      }
+    }
+
+    function focusOfferOnMap(offerId) {
+      const marker = markersByOfferId.get(String(offerId));
+
+      if (!marker) {
+        return;
+      }
+
+      map.setView(marker.getLatLng(), 16);
+      marker.openPopup();
+      highlightOfferCard(offerId);
+    }
     
     const searchForm = document.querySelector("#search-form");
     const searchInput = document.querySelector("#search-input");
@@ -492,9 +521,16 @@
       for (const offer of offers) {
         const card = document.createElement("article");
         card.className = "results-status";
+        card.dataset.offerId = String(offer.id);
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute(
+          "aria-label",
+          `Ver en el mapa: ${offer.title || "Oferta local"}`
+        );
 
         const title = document.createElement("h3");
-        title.textContent = offer.title;
+        title.textContent = offer.title || "Oferta local";
 
         const store = document.createElement("p");
         store.textContent = offer.store_name || "Comercio local";
@@ -503,7 +539,8 @@
         category.textContent = `Categoría: ${offer.category}`;
 
         const address = document.createElement("p");
-        address.textContent = offer.store_address || "Dirección no disponible";
+        address.textContent =
+          offer.store_address || "Dirección no disponible";
 
         const validity = document.createElement("p");
         validity.textContent =
@@ -517,10 +554,21 @@
           card.append(sponsor);
         }
 
+        card.addEventListener("click", () => {
+          focusOfferOnMap(offer.id);
+        });
+
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            focusOfferOnMap(offer.id);
+          }
+        });
+
         offersList.append(card);
       }
     }
-
+    
     async function loadOffers() {
       const currentRequest = ++requestNumber;
 
