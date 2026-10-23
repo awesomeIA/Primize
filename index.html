@@ -349,20 +349,20 @@
     Primize · Descubre lo que está pasando cerca de ti.
   </footer>
 
+  
   <script type="module">
-    import {
-      supabase,
-      isSupabaseConfigured
-    } from "/js/supabase-client.js";
+    import { searchOffers } from "/js/map.js";
 
     const searchForm = document.querySelector("#search-form");
     const searchInput = document.querySelector("#search-input");
     const statusBox = document.querySelector("#results-status");
+    const offersList = document.querySelector("#offers-list");
     const categoryButtons =
       document.querySelectorAll("[data-category]");
 
-    let selectedCategory = "todas";
+    let selectedCategory = "";
     let searchTerm = "";
+    let requestNumber = 0;
 
     function showMessage(title, message) {
       statusBox.replaceChildren();
@@ -376,21 +376,100 @@
       statusBox.append(heading, paragraph);
     }
 
+    function formatDate(value) {
+      return new Intl.DateTimeFormat("es-CL", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }).format(new Date(value));
+    }
+
+    function renderOffers(offers) {
+      offersList.replaceChildren();
+
+      if (offers.length === 0) {
+        showMessage(
+          "No hay ofertas disponibles",
+          "Por ahora no encontramos ofertas públicas que coincidan con tu búsqueda. Vuelve pronto para descubrir nuevas oportunidades."
+        );
+        return;
+      }
+
+      showMessage(
+        `${offers.length} ${offers.length === 1 ? "oferta encontrada" : "ofertas encontradas"}`,
+        "Estas son las promociones disponibles actualmente."
+      );
+
+      for (const offer of offers) {
+        const card = document.createElement("article");
+        card.className = "results-status";
+
+        const title = document.createElement("h3");
+        title.textContent = offer.title;
+
+        const store = document.createElement("p");
+        store.textContent = offer.store_name || "Comercio local";
+
+        const category = document.createElement("p");
+        category.textContent = `Categoría: ${offer.category}`;
+
+        const address = document.createElement("p");
+        address.textContent = offer.store_address || "Dirección no disponible";
+
+        const validity = document.createElement("p");
+        validity.textContent =
+          `Válida hasta: ${formatDate(offer.end_time)}`;
+
+        card.append(title, store, category, address, validity);
+
+        if (offer.is_sponsor) {
+          const sponsor = document.createElement("p");
+          sponsor.textContent = "Oferta patrocinada";
+          card.append(sponsor);
+        }
+
+        offersList.append(card);
+      }
+    }
+
+    async function loadOffers() {
+      const currentRequest = ++requestNumber;
+
+      showMessage(
+        "Cargando ofertas...",
+        "Estamos consultando las promociones públicas."
+      );
+
+      offersList.replaceChildren();
+
+      try {
+        const category = selectedCategory === "todas"
+          ? ""
+          : selectedCategory;
+
+        const offers = await searchOffers({
+          query: searchTerm,
+          category,
+        });
+
+        if (currentRequest !== requestNumber) return;
+
+        renderOffers(offers);
+      } catch (error) {
+        console.error("Error al cargar ofertas:", error);
+
+        if (currentRequest !== requestNumber) return;
+
+        showMessage(
+          "No pudimos cargar las ofertas",
+          "Comprueba tu conexión e inténtalo de nuevo. Si el problema continúa, revisaremos la configuración de Supabase."
+        );
+      }
+    }
+
     searchForm.addEventListener("submit", (event) => {
       event.preventDefault();
       searchTerm = searchInput.value.trim();
-
-      if (searchTerm) {
-        showMessage(
-          "Búsqueda preparada",
-          `Buscaremos "${searchTerm}" entre las ofertas activas cuando conectemos los datos.`
-        );
-      } else {
-        showMessage(
-          "Todas las ofertas",
-          "La búsqueda está lista. Conectaremos las ofertas en el siguiente paso."
-        );
-      }
+      loadOffers();
     });
 
     categoryButtons.forEach((button) => {
@@ -404,22 +483,11 @@
           );
         });
 
-        const categoryName =
-          button.textContent.trim();
-
-        showMessage(
-          `Categoría: ${categoryName}`,
-          "Este filtro ya responde a tus selecciones. En el siguiente paso lo conectaremos a las ofertas reales."
-        );
+        loadOffers();
       });
     });
 
-    if (!isSupabaseConfigured || !supabase) {
-      showMessage(
-        "Falta configurar la conexión",
-        "Revisa la URL y la publishable key de Supabase en js/supabase-client.js."
-      );
-    }
+    loadOffers();
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
