@@ -35,3 +35,45 @@
   outline: 3px solid #2563eb;
   outline-offset: 2px;
 }
+
+
+/* Ventana informativa de cada oferta */
+.offer-popup {
+  min-width: 180px;
+  max-width: 260px;
+  font-family: inherit;
+  color: #1f2937;
+}
+
+.offer-popup-title {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.offer-popup p {
+  margin: 5px 0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.offer-popup-store {
+  font-weight: 600;
+}
+
+.offer-popup-category,
+.offer-popup-address {
+  color: #4b5563;
+}
+
+.offer-popup-sponsor {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 600;
+}
