@@ -525,6 +525,7 @@
         if (currentRequest !== requestNumber) return;
 
         renderOffers(offers);
+        renderMapOffers(offers);
       } catch (error) {
         console.error("Error al cargar ofertas:", error);
 
