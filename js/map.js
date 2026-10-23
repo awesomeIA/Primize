@@ -3,11 +3,10 @@ import { supabase, isSupabaseConfigured } from "./supabase-client.js";
 
 /**
  * Obtiene las ofertas visibles públicamente desde Supabase.
- * La vista active_map_offers ya filtra las ofertas vigentes
- * de comercios verificados.
+ * La vista filtra las ofertas vigentes de comercios verificados.
  */
 export async function getActiveOffers() {
-  if (!isSupabaseConfigured) {
+  if (!isSupabaseConfigured || !supabase) {
     throw new Error(
       "Supabase no está configurado. Revisa js/supabase-client.js."
     );
@@ -29,40 +28,40 @@ export async function getActiveOffers() {
 
 /**
  * Busca ofertas por texto y categoría.
- * Si no se especifican filtros, devuelve todas las ofertas públicas.
+ * Los filtros son opcionales.
  */
 export async function searchOffers({
   query = "",
-  category = ""
+  category = "",
 } = {}) {
-  let offers = await getActiveOffers();
+  const offers = await getActiveOffers();
 
-  const normalizedQuery = query.trim().toLocaleLowerCase("es");
-  const normalizedCategory = category.trim().toLocaleLowerCase("es");
+  const normalizedQuery = String(query)
+    .trim()
+    .toLocaleLowerCase("es");
 
-  if (normalizedQuery) {
-    offers = offers.filter((offer) => {
-      const searchableText = [
-        offer.title,
-        offer.category,
-        offer.store_name,
-        offer.store_address
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLocaleLowerCase("es");
+  const normalizedCategory = String(category)
+    .trim()
+    .toLocaleLowerCase("es");
 
-      return searchableText.includes(normalizedQuery);
-    });
-  }
+  return offers.filter((offer) => {
+    const searchableText = [
+      offer.title,
+      offer.category,
+      offer.store_name,
+      offer.store_address,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLocaleLowerCase("es");
 
-  if (normalizedCategory) {
-    offers = offers.filter(
-      (offer) =>
-        offer.category?.toLocaleLowerCase("es") === normalizedCategory
-    );
-  }
+    const matchesQuery =
+      !normalizedQuery || searchableText.includes(normalizedQuery);
 
-  return offers;
+    const matchesCategory =
+      !normalizedCategory ||
+      offer.category?.toLocaleLowerCase("es") === normalizedCategory;
+
+    return matchesQuery && matchesCategory;
+  });
 }
-
