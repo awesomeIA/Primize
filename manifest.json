@@ -1,0 +1,19 @@
+
+{
+  "id": "/",
+  "name": "Primize - Ofertas locales",
+  "short_name": "Primize",
+  "description": "Descubre ofertas, promociones y experiencias cerca de ti en tiempo real.",
+  "lang": "es-CL",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#102A43",
+  "categories": [
+    "travel",
+    "shopping",
+    "food"
+  ]
+}
