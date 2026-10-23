@@ -415,18 +415,44 @@
         );
 
         const popup = document.createElement("div");
-        const title = document.createElement("strong");
-        const store = document.createElement("p");
-        const address = document.createElement("p");
+        popup.className = "offer-popup";
 
+        const title = document.createElement("strong");
+        title.className = "offer-popup-title";
         title.textContent = offer.title || "Oferta local";
+
+        const store = document.createElement("p");
+        store.className = "offer-popup-store";
         store.textContent = offer.store_name || "Comercio local";
+
+        const category = document.createElement("p");
+        category.className = "offer-popup-category";
+        category.textContent = offer.category
+          ? `Categoría: ${offer.category}`
+          : "";
+
+        const address = document.createElement("p");
+        address.className = "offer-popup-address";
         address.textContent =
           offer.store_address || "Dirección no disponible";
 
-        popup.append(title, store, address);
-        marker.bindPopup(popup);
+        popup.append(title, store);
 
+        if (offer.category) {
+          popup.append(category);
+        }
+
+        popup.append(address);
+
+        if (offer.is_sponsor) {
+          const sponsor = document.createElement("span");
+          sponsor.className = "offer-popup-sponsor";
+          sponsor.textContent = "Oferta patrocinada";
+          popup.append(sponsor);
+        }
+
+        marker.bindPopup(popup);
+        
         marker.on("click", () => {
           highlightOfferCard(offer.id);
         });
