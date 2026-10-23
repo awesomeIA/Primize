@@ -373,6 +373,7 @@
     }).addTo(map);
 
     const offerMarkers = L.featureGroup().addTo(map);
+    const markersByOfferId = new Map();
 
     
     const offerMarkerIcon = L.icon({
