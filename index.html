@@ -504,6 +504,70 @@
       highlightOfferCard(offerId);
     }
     
+    const locateButton = document.querySelector("#locate-me");
+    const locationStatus = document.querySelector("#location-status");
+
+    let userLocationMarker = null;
+
+    locateButton.addEventListener("click", () => {
+      if (!navigator.geolocation) {
+        locationStatus.textContent =
+          "Tu navegador no permite obtener la ubicación.";
+        return;
+      }
+
+      locateButton.disabled = true;
+      locationStatus.textContent = "Buscando tu ubicación…";
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const userCoordinates = [latitude, longitude];
+
+          map.setView(userCoordinates, 15);
+
+          if (userLocationMarker) {
+            map.removeLayer(userLocationMarker);
+          }
+
+          userLocationMarker = L.circleMarker(userCoordinates, {
+            radius: 9,
+            color: "#ffffff",
+            weight: 3,
+            fillColor: "#2563eb",
+            fillOpacity: 1,
+          }).addTo(map);
+
+          userLocationMarker.bindPopup("Estás aquí").openPopup();
+
+          locationStatus.textContent =
+            "Ubicación encontrada. Explora las ofertas en esta zona.";
+
+          locateButton.disabled = false;
+        },
+        (error) => {
+          if (error.code === 1) {
+            locationStatus.textContent =
+              "No se concedió permiso para acceder a tu ubicación.";
+          } else if (error.code === 2) {
+            locationStatus.textContent =
+              "No pudimos determinar tu ubicación. Inténtalo nuevamente.";
+          } else {
+            locationStatus.textContent =
+              "La solicitud tardó demasiado. Inténtalo nuevamente.";
+          }
+
+          locateButton.disabled = false;
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 10000,
+          maximumAge: 60000,
+        }
+      );
+    });
+
     const searchForm = document.querySelector("#search-form");
     const searchInput = document.querySelector("#search-input");
     const statusBox = document.querySelector("#results-status");
