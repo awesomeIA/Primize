@@ -466,8 +466,11 @@
         markersByOfferId.set(String(offer.id), marker);
         offerMarkers.addLayer(marker);
       }
-
-      if (offerMarkers.getLayers().length > 0) {
+      
+      if (
+        offerMarkers.getLayers().length > 0 &&
+        !currentUserLocation
+      ) {
         map.fitBounds(offerMarkers.getBounds(), {
           padding: [30, 30],
           maxZoom: 15,
