@@ -28,6 +28,83 @@
   #map {
     min-height: 300px;
   }
+  
+  /* Tarjeta flotante de promoción seleccionada */
+  body.map-first .selected-offer-card {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 78px;
+    z-index: 980;
+  
+    padding: 16px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 6px 28px rgb(0 0 0 / 20%);
+  }
+  
+  body.map-first .selected-offer-card[hidden] {
+    display: none;
+  }
+  
+  body.map-first .selected-offer-content {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  
+  body.map-first .selected-offer-image {
+    flex: 0 0 76px;
+    width: 76px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #edf4f1;
+    font-size: 30px;
+  }
+  
+  body.map-first .selected-offer-info {
+    flex: 1;
+    min-width: 0;
+    padding-right: 18px;
+  }
+  
+  body.map-first .selected-offer-store {
+    margin: 0 0 5px;
+    color: #64748b;
+    font-size: 12px;
+  }
+  
+  body.map-first .selected-offer-title {
+    margin: 0 0 7px;
+    color: #102a43;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  
+  body.map-first .selected-offer-address {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  
+  body.map-first .selected-offer-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #64748b;
+    font-size: 23px;
+    cursor: pointer;
+  }
 }
 
 /* Destacar la oferta seleccionada */
