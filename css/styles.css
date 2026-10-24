@@ -196,9 +196,7 @@
   font-weight: 600;
 }
 
-
 /* Pin de promoción seleccionada */
 .leaflet-marker-icon.primize-selected-marker {
   filter: hue-rotate(115deg) saturate(1.6);
-  z-index: 10 !important;
 }
