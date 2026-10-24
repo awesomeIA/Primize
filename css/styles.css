@@ -20,7 +20,6 @@
 
 /* Adaptación para teléfonos */
 @media (max-width: 600px) {
-  /* Mapa */
   .map-panel {
     height: 350px;
     border-radius: 12px;
@@ -28,39 +27,6 @@
 
   #map {
     min-height: 300px;
-  }
-
-  /* Botón de ubicación */
-  #locate-me {
-    width: 100%;
-    min-height: 44px;
-    padding: 12px 16px;
-  }
-
-  /* Filtros: mejor espacio para tocar */
-  .category-buttons button,
-  .category-filters button,
-  .filters button {
-    min-height: 44px;
-  }
-
-  /* Tarjetas de ofertas */
-  .results-status {
-    overflow-wrap: anywhere;
-  }
-
-  .results-status h3 {
-    font-size: 17px;
-    line-height: 1.4;
-  }
-
-  .results-status p {
-    line-height: 1.5;
-  }
-
-  /* Ventanas de los marcadores */
-  .offer-popup {
-    max-width: 220px;
   }
 }
 
