@@ -827,7 +827,11 @@
           popup.append(sponsor);
         }
 
-        marker.bindPopup(popup);
+        marker.bindPopup(popup, {
+          autoClose: true
+        });
+        
+        marker.off("click", marker.openPopup);
         
         marker.on("click", () => {
           highlightOfferCard(offer.id);
