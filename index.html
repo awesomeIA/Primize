@@ -336,74 +336,46 @@
   </style>
 </head>
 
-<body>
+
+<body class="map-first">
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="/" aria-label="Primize, inicio">
         primize<span>.</span>
       </a>
-
       <div class="location-label" id="location-label">
         Descubre ofertas locales
       </div>
     </div>
   </header>
 
-  <main>
-    <section class="intro">
-      <h1>Encuentra algo bueno cerca.</h1>
-      <p>
-        Ofertas locales, promociones y oportunidades en tiempo real.
-      </p>
-    </section>
-
-    <form class="search-box" id="search-form" role="search">
+  <main class="map-app">
+    <form class="search-box floating-search" id="search-form" role="search">
       <input
         id="search-input"
         type="search"
-        placeholder="Busca un lugar, producto o comercio..."
-        aria-label="Buscar ofertas"
+        placeholder="Lugar, producto o comercio..."
+        aria-label="Buscar lugar, producto o comercio"
       >
-      <button class="primary-button" type="submit">
-        Buscar ofertas
+      <button class="primary-button" type="submit" aria-label="Buscar">
+        Buscar
       </button>
     </form>
 
-    <nav class="filters" aria-label="Filtrar por categoría">
+    <nav class="filters floating-filters" aria-label="Filtrar por categoría">
       <button class="filter-button" type="button"
-        data-category="todas" aria-pressed="true">
-        Todas
-      </button>
+        data-category="todas" aria-pressed="true">Todas</button>
       <button class="filter-button" type="button"
-        data-category="gastronomia" aria-pressed="false">
-        🍽️ Gastronomía
-      </button>
+        data-category="gastronomia" aria-pressed="false">🍽️ Gastronomía</button>
       <button class="filter-button" type="button"
-        data-category="comercio" aria-pressed="false">
-        🛍️ Comercio
-      </button>
+        data-category="comercio" aria-pressed="false">🛍️ Comercio</button>
       <button class="filter-button" type="button"
-        data-category="experiencias" aria-pressed="false">
-        🎯 Experiencias
-      </button>
+        data-category="experiencias" aria-pressed="false">🎯 Experiencias</button>
       <button class="filter-button" type="button"
-        data-category="servicios" aria-pressed="false">
-        ✨ Servicios
-      </button>
+        data-category="servicios" aria-pressed="false">✨ Servicios</button>
     </nav>
 
-    
-    <section aria-labelledby="map-title">
-      <div class="section-heading">
-        <h2 id="map-title">Explora el mapa</h2>
-
-        <button id="locate-me" type="button">
-          Encontrar ofertas cerca de mí
-        </button>
-
-        <p id="location-status" role="status" aria-live="polite"></p>
-      </div>
-
+    <section class="map-stage" aria-label="Mapa y promociones">
       <div class="map-panel" id="map-panel">
         <div
           id="map"
@@ -411,35 +383,59 @@
           aria-label="Mapa interactivo de ofertas locales"
         ></div>
       </div>
-    </section>
 
-    <section class="offers-section" aria-labelledby="offers-title">
-      <div class="section-heading">
-        <h2 id="offers-title">Ofertas activas</h2>
+      <div class="map-status" id="map-status">
+        <p id="location-status" role="status" aria-live="polite"></p>
+        <button id="locate-me" type="button">
+          <span aria-hidden="true">◎</span> Mi ubicación
+        </button>
       </div>
 
-      <div
-        class="results-status"
-        id="results-status"
-        role="status"
-        aria-live="polite"
+      <button
+        class="floating-list-button"
+        id="toggle-offers-list"
+        type="button"
+        aria-controls="offers-panel"
+        aria-expanded="false"
       >
-        <h3>Estamos preparando las ofertas</h3>
-        <p>
-          Esta pantalla ya está preparada. En el siguiente paso
-          conectaremos la base de datos para mostrar promociones
-          publicadas por los comercios.
-        </p>
-      </div>
+        <span aria-hidden="true">☷</span>
+        Ver promociones
+      </button>
 
-      <div id="offers-list" aria-live="polite"></div>
+      <section
+        class="offers-panel"
+        id="offers-panel"
+        aria-labelledby="offers-title"
+        hidden
+      >
+        <div class="offers-panel-heading">
+          <h2 id="offers-title">Ofertas cerca de ti</h2>
+          <button
+            id="close-offers-list"
+            class="close-offers-button"
+            type="button"
+            aria-label="Cerrar lista de promociones"
+          >×</button>
+        </div>
+
+        <div
+          class="results-status"
+          id="results-status"
+          role="status"
+          aria-live="polite"
+        >
+          <h3>Estamos preparando las ofertas</h3>
+          <p>Las promociones disponibles aparecerán aquí.</p>
+        </div>
+
+        <div id="offers-list" aria-live="polite"></div>
+      </section>
     </section>
   </main>
 
   <footer class="footer">
     Primize · Descubre lo que está pasando cerca de ti.
   </footer>
-
   
   <script type="module">   
     import * as L from "https://esm.sh/leaflet@1.9.4";
