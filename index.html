@@ -649,7 +649,32 @@
           id="map"
           role="application"
           aria-label="Mapa interactivo de ofertas locales"
-        ></div>
+        ></div>   
+        <article
+          class="selected-offer-card"
+          id="selected-offer-card"
+          aria-label="Promoción seleccionada"
+          hidden
+        >
+          <button
+            class="selected-offer-close"
+            id="selected-offer-close"
+            type="button"
+            aria-label="Cerrar promoción"
+          >×</button>
+        
+          <div class="selected-offer-content">
+            <div class="selected-offer-image" aria-hidden="true">
+              🏷️
+            </div>
+        
+            <div class="selected-offer-info">
+              <p class="selected-offer-store" id="selected-offer-store"></p>
+              <h3 class="selected-offer-title" id="selected-offer-title"></h3>
+              <p class="selected-offer-address" id="selected-offer-address"></p>
+            </div>
+          </div>
+        </article>
       </div>
 
       <div class="map-status" id="map-status">
@@ -806,6 +831,7 @@
         
         marker.on("click", () => {
           highlightOfferCard(offer.id);
+          showSelectedOffer(offer);
         });
 
         markersByOfferId.set(String(offer.id), marker);
