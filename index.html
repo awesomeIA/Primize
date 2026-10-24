@@ -790,6 +790,8 @@
           { icon: offerMarkerIcon }
         );
 
+        marker.offerData = offer;
+
         const popup = document.createElement("div");
         popup.className = "offer-popup";
 
@@ -826,12 +828,6 @@
           sponsor.textContent = "Oferta patrocinada";
           popup.append(sponsor);
         }
-
-        marker.bindPopup(popup, {
-          autoClose: true
-        });
-        
-        marker.off("click", marker.openPopup);
         
         marker.on("click", () => {
           highlightOfferCard(offer.id);
@@ -869,19 +865,26 @@
         }
       }
     }
-
+    
     function focusOfferOnMap(offerId) {
       const marker = markersByOfferId.get(String(offerId));
-
+    
       if (!marker) {
         return;
       }
-
+    
       map.setView(marker.getLatLng(), 16);
-      marker.openPopup();
+    
+      // Mostrar la tarjeta flotante de la promoción
+      const offer = marker.offerData;
+    
+      if (offer) {
+        showSelectedOffer(offer);
+      }
+    
       highlightOfferCard(offerId);
     }
-    
+
     const locateButton = document.querySelector("#locate-me");
     const locationStatus = document.querySelector("#location-status");
 
