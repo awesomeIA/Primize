@@ -750,7 +750,6 @@
 
     const offerMarkers = L.featureGroup().addTo(map);
     const markersByOfferId = new Map();
-
     
     const offerMarkerIcon = L.icon({
       iconUrl:
@@ -763,29 +762,34 @@
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
       shadowSize: [41, 41],
-    
-      const selectedMarkerIcon = L.icon({
-        iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
-        shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-        className: "primize-selected-marker"
-      });
-      
-      let selectedMarker = null;
-      
-      function selectOfferMarker(marker) {
-        if (selectedMarker && selectedMarker !== marker) {
-          selectedMarker.setIcon(offerMarkerIcon);
-        }
-      
-        marker.setIcon(selectedMarkerIcon);
-        selectedMarker = marker;
-      }
     });
-
+    
+    // Icono para la promoción seleccionada
+    const selectedMarkerIcon = L.icon({
+      iconUrl:
+        "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+      iconRetinaUrl:
+        "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+      shadowUrl:
+        "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41],
+      className: "primize-selected-marker",
+    });
+    
+    // Marcador actualmente seleccionado
+    let selectedMarker = null;
+    
+    function selectOfferMarker(marker) {
+      if (selectedMarker && selectedMarker !== marker) {
+        selectedMarker.setIcon(offerMarkerIcon);
+      }
+    
+      marker.setIcon(selectedMarkerIcon);
+      selectedMarker = marker;
+    }
     
     function renderMapOffers(offers) {
       offerMarkers.clearLayers();
