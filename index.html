@@ -483,6 +483,53 @@
       body.map-first .footer {
         display: none;
       }
+      
+      /* Lupa decorativa */
+      body.map-first .search-icon {
+        display: flex;
+        flex: 0 0 24px;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 36px;
+        color: #102a43;
+        pointer-events: none;
+      }
+      
+      /* X limpia, sin cuadrado ni fondo */
+      body.map-first .search-clear-button {
+        appearance: none;
+        -webkit-appearance: none;
+        display: flex;
+        flex: 0 0 24px;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 36px;
+        margin: 0;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        outline: none;
+        background: transparent;
+        box-shadow: none;
+        color: #64748b;
+        cursor: pointer;
+      }
+      
+      body.map-first .search-clear-button svg {
+        display: block;
+        border: none;
+        background: transparent;
+      }
+      
+      /* Mantener accesibilidad con teclado */
+      body.map-first .search-clear-button:focus-visible {
+        outline: 2px solid #16a085;
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      
     }
     </style>
 </head>
@@ -506,11 +553,8 @@
       id="search-form"
       role="search"
     >
-      <button
-        class="search-icon-button"
-        type="submit"
-        aria-label="Buscar ofertas"
-      >
+      
+      <span class="search-icon" aria-hidden="true">
         <svg
           width="21"
           height="21"
@@ -520,12 +564,11 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          aria-hidden="true"
         >
           <circle cx="11" cy="11" r="7"></circle>
           <path d="m20 20-4-4"></path>
         </svg>
-      </button>
+      </span>
     
       <input
         id="search-input"
