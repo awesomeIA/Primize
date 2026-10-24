@@ -524,6 +524,7 @@
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
           const userCoordinates = [latitude, longitude];
+
           currentUserLocation = { latitude, longitude };
 
           map.setView(userCoordinates, 15);
@@ -543,10 +544,13 @@
           userLocationMarker.bindPopup("Estás aquí").openPopup();
 
           locationStatus.textContent =
-            "Ubicación encontrada. Explora las ofertas en esta zona.";
+            "Ubicación encontrada. Explorando ofertas cercanas…";
 
           locateButton.disabled = false;
+
+          loadOffers();
         },
+        
         (error) => {
           if (error.code === 1) {
             locationStatus.textContent =
