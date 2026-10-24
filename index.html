@@ -1173,6 +1173,45 @@
         );
       }
     }
+    
+    const selectedOfferCard = document.querySelector(
+      "#selected-offer-card"
+    );
+    
+    const selectedOfferStore = document.querySelector(
+      "#selected-offer-store"
+    );
+    
+    const selectedOfferTitle = document.querySelector(
+      "#selected-offer-title"
+    );
+    
+    const selectedOfferAddress = document.querySelector(
+      "#selected-offer-address"
+    );
+    
+    const selectedOfferClose = document.querySelector(
+      "#selected-offer-close"
+    );
+    
+    function showSelectedOffer(offer) {
+      selectedOfferStore.textContent =
+        offer.store_name || "Comercio local";
+    
+      selectedOfferTitle.textContent =
+        offer.title || "Oferta local";
+    
+      selectedOfferAddress.textContent =
+        offer.store_address || "Dirección no disponible";
+    
+      selectedOfferCard.hidden = false;
+    }
+    
+    selectedOfferClose.addEventListener("click", () => {
+      selectedOfferCard.hidden = true;
+      map.closePopup();
+    });
+
 
     searchForm.addEventListener("submit", (event) => {
       event.preventDefault();
