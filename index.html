@@ -790,6 +790,8 @@
     function renderMapOffers(offers) {
       offerMarkers.clearLayers();
       markersByOfferId.clear();
+      selectedMarker = null;
+      selectedOfferCard.hidden = true;
 
       for (const offer of offers) {
         const latitude = Number(offer.latitude);
@@ -896,6 +898,7 @@
       }
     
       map.setView(marker.getLatLng(), 16);
+      selectOfferMarker(marker);
     
       // Mostrar la tarjeta flotante de la promoción
       const offer = marker.offerData;
@@ -1234,13 +1237,16 @@
         offer.store_address || "Dirección no disponible";
     
       selectedOfferCard.hidden = false;
-    }
+    }   
     
     selectedOfferClose.addEventListener("click", () => {
       selectedOfferCard.hidden = true;
-      map.closePopup();
+    
+      if (selectedMarker) {
+        selectedMarker.setIcon(offerMarkerIcon);
+        selectedMarker = null;
+      }
     });
-
 
     searchForm.addEventListener("submit", (event) => {
       event.preventDefault();
