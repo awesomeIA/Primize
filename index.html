@@ -848,9 +848,10 @@
           sponsor.className = "offer-popup-sponsor";
           sponsor.textContent = "Oferta patrocinada";
           popup.append(sponsor);
-        }
+        }    
         
         marker.on("click", () => {
+          selectOfferMarker(marker);
           highlightOfferCard(offer.id);
           showSelectedOffer(offer);
         });
