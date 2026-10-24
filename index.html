@@ -335,259 +335,64 @@
 
       
       /* Primize: experiencia móvil centrada en el mapa */
+      
       @media (max-width: 600px) {
-        html,
-        body.map-first {
-          width: 100%;
-          min-height: 100%;
-          margin: 0;
-          overflow: hidden;
-        }
-      
-        body.map-first {
-          height: 100vh;
-          height: 100dvh;
-          background: #f4f7fa;
-        }
-      
         body.map-first .topbar {
-          position: absolute;
-          inset: 0 0 auto;
-          z-index: 1000;
-          height: 58px;
-          padding: 0 16px;
-          background: #ffffff;
-          box-shadow: 0 2px 12px rgb(16 42 67 / 8%);
-        }
-      
-        body.map-first .topbar-inner {
-          height: 100%;
-          max-width: none;
-          gap: 10px;
-        }
-      
-        body.map-first .brand {
-          font-size: 25px;
-          text-decoration: none;
-        }
-      
-        body.map-first .location-label {
-          max-width: 150px;
-          font-size: 11px;
+          height: 56px;
         }
       
         body.map-first main.map-app {
-          position: absolute;
-          inset: 58px 0 0;
-          width: 100%;
-          max-width: none;
-          height: auto;
-          margin: 0;
-          padding: 0;
+          top: 56px;
         }
       
         body.map-first .floating-search {
-          position: absolute;
-          z-index: 500;
-          top: 12px;
+          top: 10px;
           left: 12px;
           right: 12px;
-          display: flex;
-          gap: 6px;
-          margin: 0;
-          padding: 6px;
-          border-radius: 15px;
-          background: #ffffff;
-          box-shadow: 0 4px 18px rgb(16 42 67 / 16%);
+          height: 52px;
+          align-items: center;
+          padding: 5px 6px 5px 14px;
+          border-radius: 16px;
         }
       
         body.map-first .floating-search input {
-          min-width: 0;
-          min-height: 44px;
-          padding: 0 10px;
-          border: 0;
-          background: transparent;
+          height: 40px;
+          min-height: 40px;
+          padding: 0 4px;
           font-size: 14px;
         }
       
         body.map-first .floating-search .primary-button {
-          min-height: 42px;
-          padding: 0 13px;
-          border-radius: 10px;
-          font-size: 13px;
+          flex: 0 0 auto;
+          min-height: 40px;
+          padding: 0 12px;
+          border-radius: 12px;
         }
       
         body.map-first .floating-filters {
-          position: absolute;
-          z-index: 500;
-          top: 76px;
+          top: 72px;
           left: 12px;
           right: 0;
-          display: flex;
-          flex-wrap: nowrap;
           gap: 8px;
-          margin: 0;
-          padding: 2px 12px 12px 0;
-          overflow-x: auto;
-          overflow-y: hidden;
-          scrollbar-width: none;
-        }
-      
-        body.map-first .floating-filters::-webkit-scrollbar {
-          display: none;
+          padding: 0 12px 8px 0;
         }
       
         body.map-first .floating-filters .filter-button {
-          flex: 0 0 auto;
           min-height: 36px;
-          padding: 7px 12px;
-          border-radius: 10px;
-          background: #ffffff;
-          box-shadow: 0 2px 8px rgb(16 42 67 / 10%);
+          padding: 0 13px;
+          border-radius: 18px;
           font-size: 12px;
-          white-space: nowrap;
-        }
-      
-        body.map-first .floating-filters .filter-button[aria-pressed="true"] {
-          background: #102a43;
-          border-color: #102a43;
-          color: #ffffff;
-        }
-      
-        body.map-first .map-stage {
-          position: absolute;
-          inset: 0;
-        }
-      
-        body.map-first .map-panel {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          min-height: 0;
-          padding: 0;
-          border: 0;
-          border-radius: 0;
-          overflow: hidden;
-          background: #e8eef2;
-        }
-      
-        body.map-first #map {
-          width: 100%;
-          height: 100%;
-          min-height: 0;
         }
       
         body.map-first .map-status {
-          position: absolute;
-          z-index: 500;
-          right: 12px;
-          bottom: 88px;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          gap: 8px;
-        }
-      
-        body.map-first #location-status {
-          max-width: 220px;
-          margin: 0;
-          padding: 0;
-          color: #243b53;
-          font-size: 12px;
-          text-align: right;
-        }
-      
-        body.map-first #locate-me {
-          min-height: 44px;
-          padding: 0 14px;
-          border: 0;
-          border-radius: 13px;
-          background: #ffffff;
-          color: #102a43;
-          box-shadow: 0 3px 14px rgb(16 42 67 / 18%);
-          font-size: 13px;
-          font-weight: 600;
+          bottom: 86px;
         }
       
         body.map-first .floating-list-button {
-          position: absolute;
-          z-index: 600;
-          bottom: 20px;
-          left: 50%;
-          transform: translateX(-50%);
-          min-height: 48px;
-          padding: 0 20px;
-          border: 0;
-          border-radius: 15px;
-          background: #102a43;
-          color: #ffffff;
-          box-shadow: 0 5px 20px rgb(16 42 67 / 25%);
-          font-size: 14px;
-          font-weight: 650;
-          white-space: nowrap;
-        }
-      
-        body.map-first .offers-panel {
-          position: absolute;
-          z-index: 800;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          max-height: 68%;
-          padding: 18px 16px max(18px, env(safe-area-inset-bottom));
-          overflow-y: auto;
-          border-radius: 22px 22px 0 0;
-          background: #f4f7fa;
-          box-shadow: 0 -8px 30px rgb(16 42 67 / 18%);
-        }
-      
-        body.map-first .offers-panel[hidden] {
-          display: none;
-        }
-      
-        body.map-first .offers-panel-heading {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 12px;
-          margin-bottom: 14px;
-        }
-      
-        body.map-first .offers-panel-heading h2 {
-          margin: 0;
-          color: #102a43;
-          font-size: 19px;
-        }
-      
-        body.map-first .close-offers-button {
-          width: 36px;
-          height: 36px;
-          border: 0;
-          border-radius: 50%;
-          background: #e5ebf0;
-          color: #102a43;
-          font-size: 25px;
-          line-height: 1;
-        }
-      
-        body.map-first .results-status,
-        body.map-first #offers-list > * {
-          margin-bottom: 10px;
-          padding: 16px;
-          border: 1px solid #e0e7ee;
-          border-radius: 15px;
-          background: #ffffff;
-          box-shadow: 0 2px 8px rgb(16 42 67 / 5%);
-        }
-      
-        body.map-first .footer {
-          display: none;
+          bottom: max(16px, env(safe-area-inset-bottom));
         }
       }
 
-      
-    }
   </style>
 </head>
 
