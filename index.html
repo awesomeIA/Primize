@@ -562,6 +562,25 @@
         border-radius: 4px;
       }
       
+      /* Logo del comercio en la tarjeta flotante */
+      body.map-first .selected-offer-image {
+        overflow: hidden;
+      }
+      
+      /* Imagen real del comercio */
+      body.map-first #selected-offer-logo {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 14px;
+      }
+      
+      /* Ocultar logo o emoji cuando corresponda */
+      body.map-first #selected-offer-logo[hidden],
+      body.map-first #selected-offer-placeholder[hidden] {
+        display: none;
+      }
     }
     </style>
 </head>
@@ -1219,6 +1238,20 @@
       "#selected-offer-card"
     );
     
+    const selectedOfferLogo = document.querySelector(
+      "#selected-offer-logo"
+    );
+    
+    const selectedOfferPlaceholder = document.querySelector(
+      "#selected-offer-placeholder"
+    );
+    
+    selectedOfferLogo.addEventListener("error", () => {
+      selectedOfferLogo.hidden = true;
+      selectedOfferPlaceholder.hidden = false;
+      selectedOfferLogo.removeAttribute("src");
+    });
+    
     const selectedOfferStore = document.querySelector(
       "#selected-offer-store"
     );
@@ -1244,6 +1277,30 @@
     
       selectedOfferAddress.textContent =
         offer.store_address || "Dirección no disponible";
+      
+      const logo = String(offer.store_logo || "").trim();
+      
+      selectedOfferLogo.hidden = true;
+      selectedOfferPlaceholder.hidden = false;
+      selectedOfferLogo.removeAttribute("src");
+      
+      if (logo) {
+        try {
+          const logoUrl = new URL(logo, window.location.origin);
+      
+          if (["https:", "http:"].includes(logoUrl.protocol)) {
+            selectedOfferLogo.alt =
+              `Logo de ${offer.store_name || "comercio"}`;
+      
+            selectedOfferLogo.src = logoUrl.href;
+            selectedOfferLogo.hidden = false;
+            selectedOfferPlaceholder.hidden = true;
+          }
+        } catch (error) {
+          console.warn("URL de logo no válida:", error);
+        }
+      }
+
     
       selectedOfferCard.hidden = false;
     }   
