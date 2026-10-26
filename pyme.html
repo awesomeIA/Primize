@@ -1,1 +1,328 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>Panel Pyme | Primize</title>
+
+  <style>
+    :root {
+      font-family: Arial, sans-serif;
+      color: #102a43;
+      background: #f5f7fa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .topbar {
+      background: #ffffff;
+      border-bottom: 1px solid #e5eaf0;
+      padding: 18px 20px;
+    }
+
+    .topbar-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 3px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #e8f6f2;
+      font-size: 21px;
+    }
+
+    .dashboard {
+      max-width: 1100px;
+      margin: auto;
+      padding: 24px 16px 100px;
+    }
+
+    .welcome {
+      padding: 24px;
+      border-radius: 20px;
+      background: #102a43;
+      color: #ffffff;
+      margin-bottom: 24px;
+    }
+
+    .welcome p {
+      margin: 0 0 8px;
+      color: #b9cbd9;
+      font-size: 13px;
+    }
+
+    .welcome h1 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .welcome span {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #dbe6ef;
+    }
+
+    .section-title {
+      font-size: 17px;
+      margin: 0 0 16px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .dashboard-card {
+      min-height: 155px;
+      padding: 20px 16px;
+      border: 1px solid #e5eaf0;
+      border-radius: 18px;
+      background: #ffffff;
+      text-align: left;
+      color: inherit;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgb(0 0 0 / 7%);
+    }
+
+    .dashboard-card:focus-visible {
+      outline: 3px solid #16a085;
+      outline-offset: 3px;
+    }
+
+    .card-icon {
+      font-size: 28px;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .card-description {
+      display: block;
+      font-size: 12px;
+      line-height: 1.4;
+      color: #64748b;
+    }
+
+    .notice {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 14px;
+      background: #e8f6f2;
+      color: #17594c;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 8px max(12px, env(safe-area-inset-bottom));
+      background: #ffffff;
+      border-top: 1px solid #e5eaf0;
+    }
+
+    .nav-item {
+      flex: 1;
+      text-align: center;
+      color: #64748b;
+      font-size: 11px;
+      text-decoration: none;
+      padding: 5px;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .nav-item.active {
+      color: #087f6d;
+      font-weight: 700;
+    }
+
+    @media (min-width: 700px) {
+      .dashboard {
+        padding: 36px 24px 110px;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .welcome {
+        padding: 32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <div class="brand">Primize</div>
+        <div class="brand-subtitle">Panel Pyme</div>
+      </div>
+
+      <div class="avatar" aria-hidden="true">🏪</div>
+    </div>
+  </header>
+
+  <main class="dashboard">
+
+    <section class="welcome">
+      <p>Bienvenido a Primize</p>
+      <h1>Gestiona tus promociones</h1>
+      <span>
+        Administra tu comercio y conecta con
+        nuevos clientes desde un solo lugar.
+      </span>
+    </section>
+
+    <h2 class="section-title">Tu espacio de trabajo</h2>
+
+    <section class="dashboard-grid"
+             aria-label="Secciones del panel">
+
+      <button class="dashboard-card"
+              type="button"
+              data-section="Mi comercio">
+        <span class="card-icon" aria-hidden="true">🏪</span>
+        <span class="card-title">Mi comercio</span>
+        <span class="card-description">
+          Edita tu perfil, logo y dirección.
+        </span>
+      </button>
+
+      <button class="dashboard-card"
+              type="button"
+              data-section="Promociones">
+        <span class="card-icon" aria-hidden="true">📣</span>
+        <span class="card-title">Promociones</span>
+        <span class="card-description">
+          Crea y administra tus ofertas.
+        </span>
+      </button>
+
+      <button class="dashboard-card"
+              type="button"
+              data-section="Estadísticas">
+        <span class="card-icon" aria-hidden="true">📊</span>
+        <span class="card-title">Estadísticas</span>
+        <span class="card-description">
+          Consulta tus resultados.
+        </span>
+      </button>
+
+      <button class="dashboard-card"
+              type="button"
+              data-section="Configuración">
+        <span class="card-icon" aria-hidden="true">⚙️</span>
+        <span class="card-title">Configuración</span>
+        <span class="card-description">
+          Gestiona tu cuenta y acceso.
+        </span>
+      </button>
+
+    </section>
+
+    <div class="notice" id="panel-notice" role="status">
+      Estamos preparando tu panel.
+      Próximamente podrás gestionar tus datos
+      y promociones desde aquí.
+    </div>
+
+  </main>
+
+  <nav class="bottom-nav" aria-label="Navegación del panel">
+    <a href="pyme.html" class="nav-item active"
+       aria-current="page">
+      <span aria-hidden="true">🏠</span>
+      Inicio
+    </a>
+
+    <a href="#comercio" class="nav-item" data-section="Mi comercio">
+      <span aria-hidden="true">🏪</span>
+      Comercio
+    </a>
+
+    <a href="#promociones" class="nav-item" data-section="Promociones">
+      <span aria-hidden="true">📣</span>
+      Ofertas
+    </a>
+
+    <a href="#configuracion" class="nav-item" data-section="Configuración">
+      <span aria-hidden="true">⚙️</span>
+      Ajustes
+    </a>
+  </nav>
+
+  <script>
+    const notice = document.querySelector("#panel-notice");
+
+    document.querySelectorAll("[data-section]").forEach((element) => {
+      element.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const section = element.dataset.section;
+
+        notice.textContent =
+          `La sección "${section}" estará disponible ` +
+          "en una próxima etapa.";
+      });
+    });
+  </script>
+
+</body>
+</html>
+
