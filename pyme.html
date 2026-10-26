@@ -7,6 +7,11 @@
   <meta name="theme-color" content="#ffffff">
   <title>Panel Pyme | Primize</title>
 
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
   <style>
     :root {
       font-family: Arial, sans-serif;
@@ -202,6 +207,144 @@
         padding: 32px;
       }
     }
+    
+    /* Panel Mi comercio */
+    .commerce-profile[hidden] {
+      display: none;
+    }
+    
+    .commerce-profile {
+      background: #ffffff;
+      padding: 22px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    
+    .profile-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .profile-heading h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    
+    #back-to-dashboard {
+      background: transparent;
+      border: 0;
+      color: #087f6d;
+      cursor: pointer;
+    }
+    
+    #commerce-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    #commerce-form > label {
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+    
+    #commerce-form > input,
+    #commerce-form > select {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid #d8e1e8;
+      border-radius: 12px;
+      padding: 12px;
+      font: inherit;
+      background: #ffffff;
+      color: #102a43;
+    }
+    
+    .profile-logo-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px;
+      background: #f5f7fa;
+      border-radius: 16px;
+    }
+    
+    .profile-logo-preview {
+      width: 90px;
+      height: 90px;
+      border-radius: 16px;
+      background: #e8f6f2;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      font-size: 36px;
+    }
+    
+    #profile-logo-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    #profile-logo-image[hidden],
+    #profile-logo-placeholder[hidden] {
+      display: none;
+    }
+    
+    .logo-upload-label {
+      padding: 11px 18px;
+      border-radius: 999px;
+      background: #102a43;
+      color: #ffffff;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    
+    .profile-logo-section p,
+    .map-help,
+    .coordinates {
+      margin: 0;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    
+    #commerce-map {
+      height: 260px;
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #e8eef2;
+    }
+    
+    .profile-save {
+      margin-top: 16px;
+      padding: 14px;
+      border: 0;
+      border-radius: 12px;
+      background: #087f6d;
+      color: #ffffff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    
+    .profile-message {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: #17594c;
+    }
+    
+    @media (max-width: 600px) {
+      .commerce-profile {
+        padding: 16px;
+      }
+    }
+    
   </style>
 </head>
 
@@ -275,7 +418,89 @@
       </button>
 
     </section>
-
+    
+    <section class="commerce-profile" id="commerce-profile" hidden>
+      <div class="profile-heading">
+        <h2>Mi comercio</h2>
+        <button type="button" id="back-to-dashboard">
+          ← Volver
+        </button>
+      </div>
+    
+      <form id="commerce-form">
+        <div class="profile-logo-section">
+          <div class="profile-logo-preview">
+            <img id="profile-logo-image" alt="Vista previa del logo" hidden>
+            <span id="profile-logo-placeholder" aria-hidden="true">🏪</span>
+          </div>
+    
+          <label for="commerce-logo" class="logo-upload-label">
+            Seleccionar logo
+          </label>
+    
+          <input
+            type="file"
+            id="commerce-logo"
+            accept="image/png,image/jpeg,image/webp"
+            hidden
+          >
+    
+          <p>PNG, JPG o WebP · Máximo 2 MB</p>
+        </div>
+    
+        <label for="commerce-name">Nombre comercial</label>
+        <input
+          id="commerce-name"
+          type="text"
+          maxlength="100"
+          placeholder="Ej. Café Primize"
+          required
+        >
+    
+        <label for="commerce-category">Categoría</label>
+        <select id="commerce-category" required>
+          <option value="">Seleccionar categoría</option>
+          <option value="Gastronomía">Gastronomía</option>
+          <option value="Bar/Carrete">Bar / Carrete</option>
+          <option value="Tours/Aventura">Tours / Aventura</option>
+          <option value="Alojamiento">Alojamiento</option>
+          <option value="Otro">Otro</option>
+        </select>
+    
+        <label for="commerce-address">Dirección</label>
+        <input
+          id="commerce-address"
+          type="text"
+          placeholder="Calle, número y comuna"
+          required
+        >
+    
+        <label>Ubicación exacta</label>
+        <p class="map-help">
+          Arrastra el marcador hasta la ubicación de tu comercio.
+        </p>
+    
+        <div id="commerce-map" aria-label="Mapa para elegir ubicación"></div>
+    
+        <p class="coordinates" id="commerce-coordinates">
+          Ubicación pendiente de confirmar
+        </p>
+    
+        <label for="commerce-whatsapp">WhatsApp comercial</label>
+        <input
+          id="commerce-whatsapp"
+          type="tel"
+          placeholder="+56 9 1234 5678"
+        >
+    
+        <button type="submit" class="profile-save">
+          Revisar perfil
+        </button>
+    
+        <p class="profile-message" id="profile-message" role="status"></p>
+      </form>
+    </section>
+    
     <div class="notice" id="panel-notice" role="status">
       Estamos preparando tu panel.
       Próximamente podrás gestionar tus datos
@@ -306,20 +531,153 @@
       Ajustes
     </a>
   </nav>
-
-  <script>
+  
+  <script type="module">
+    import * as L from "https://esm.sh/leaflet@1.9.4";
+  
     const notice = document.querySelector("#panel-notice");
-
+    const profile = document.querySelector("#commerce-profile");
+    const dashboardGrid = document.querySelector(".dashboard-grid");
+    const welcome = document.querySelector(".welcome");
+    const sectionTitle = document.querySelector(".section-title");
+    const backButton = document.querySelector("#back-to-dashboard");
+    const logoInput = document.querySelector("#commerce-logo");
+    const logoImage = document.querySelector("#profile-logo-image");
+    const logoPlaceholder = document.querySelector("#profile-logo-placeholder");
+    const form = document.querySelector("#commerce-form");
+    const message = document.querySelector("#profile-message");
+    const coordinatesLabel = document.querySelector("#commerce-coordinates");
+  
+    let commerceMap = null;
+    let commerceMarker = null;
+    let logoPreviewUrl = null;
+  
+    function showDashboard() {
+      profile.hidden = true;
+      dashboardGrid.hidden = false;
+      welcome.hidden = false;
+      sectionTitle.hidden = false;
+      notice.hidden = false;
+    }
+  
+    function showCommerceProfile() {
+      profile.hidden = false;
+      dashboardGrid.hidden = true;
+      welcome.hidden = true;
+      sectionTitle.hidden = true;
+      notice.hidden = true;
+  
+      if (!commerceMap) {
+        initializeCommerceMap();
+      }
+  
+      requestAnimationFrame(() => {
+        commerceMap.invalidateSize();
+      });
+    }
+  
+    function initializeCommerceMap() {
+      // Posición inicial de referencia: Viña del Mar.
+      // El comercio debe ajustar el marcador a su dirección.
+      const initialPosition = [-33.0245, -71.5518];
+  
+      commerceMap = L.map("commerce-map").setView(initialPosition, 13);
+  
+      L.tileLayer(
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+          maxZoom: 19
+        }
+      ).addTo(commerceMap);
+  
+      commerceMarker = L.marker(initialPosition, {
+        draggable: true
+      }).addTo(commerceMap);
+  
+      function updateCoordinates() {
+        const position = commerceMarker.getLatLng();
+  
+        coordinatesLabel.textContent =
+          `Latitud: ${position.lat.toFixed(6)} · ` +
+          `Longitud: ${position.lng.toFixed(6)}`;
+      }
+  
+      commerceMarker.on("dragend", updateCoordinates);
+  
+      commerceMap.on("click", (event) => {
+        commerceMarker.setLatLng(event.latlng);
+        updateCoordinates();
+      });
+  
+      updateCoordinates();
+    }
+  
     document.querySelectorAll("[data-section]").forEach((element) => {
       element.addEventListener("click", (event) => {
         event.preventDefault();
-
+  
         const section = element.dataset.section;
-
+  
+        if (section === "Mi comercio") {
+          showCommerceProfile();
+          return;
+        }
+  
         notice.textContent =
           `La sección "${section}" estará disponible ` +
           "en una próxima etapa.";
+  
+        showDashboard();
       });
+    });
+  
+    backButton.addEventListener("click", showDashboard);
+  
+    logoInput.addEventListener("change", () => {
+      const file = logoInput.files?.[0];
+      if (!file) return;
+  
+      const allowedTypes = [
+        "image/png",
+        "image/jpeg",
+        "image/webp"
+      ];
+  
+      if (!allowedTypes.includes(file.type) ||
+          file.size > 2 * 1024 * 1024) {
+        alert("Selecciona una imagen PNG, JPG o WebP de máximo 2 MB.");
+        logoInput.value = "";
+        return;
+      }
+  
+      if (logoPreviewUrl) {
+        URL.revokeObjectURL(logoPreviewUrl);
+      }
+  
+      logoPreviewUrl = URL.createObjectURL(file);
+  
+      logoImage.src = logoPreviewUrl;
+      logoImage.hidden = false;
+      logoPlaceholder.hidden = true;
+    });
+  
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+  
+      if (!form.reportValidity()) return;
+  
+      const position = commerceMarker?.getLatLng();
+  
+      if (!position) {
+        message.textContent = "Selecciona la ubicación del comercio.";
+        return;
+      }
+  
+      message.textContent =
+        "Perfil revisado correctamente. " +
+        "Los datos aún no se guardan en Supabase.";
     });
   </script>
 
