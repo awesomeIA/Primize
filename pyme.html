@@ -469,6 +469,34 @@
     #auth-screen[hidden] {
       display: none;
     }
+ 
+    /* Confirmación de ubicación del comercio */
+    
+    .confirm-location-button {
+      width: 100%;
+      min-height: 46px;
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid #102a43;
+      border-radius: 12px;
+      background: #ffffff;
+      color: #102a43;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    
+    .confirm-location-button.confirmed {
+      background: #e8f6ef;
+      border-color: #16804a;
+      color: #16804a;
+    }
+    
+    #location-confirmation-message {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #64748b;
+    }
     
   </style>
 </head>
@@ -943,6 +971,16 @@
     const form = document.querySelector("#commerce-form");
     const message = document.querySelector("#profile-message");
     const coordinatesLabel = document.querySelector("#commerce-coordinates");
+    
+    const confirmLocationButton = document.querySelector(
+      "#confirm-commerce-location"
+    );
+    
+    const locationConfirmationMessage = document.querySelector(
+      "#location-confirmation-message"
+    );
+    
+    let commerceLocationConfirmed = false;
   
     let commerceMap = null;
     let commerceMarker = null;
