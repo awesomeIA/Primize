@@ -345,195 +345,576 @@
       }
     }
     
+    /* Autenticación Panel Pyme */
+    .auth-screen[hidden] {
+      display: none;
+    }
+    
+    .auth-screen {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 24px 16px;
+      background: #f5f7fa;
+    }
+    
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 32px 24px;
+      border-radius: 22px;
+      background: #ffffff;
+      box-shadow: 0 8px 32px rgb(0 0 0 / 8%);
+    }
+    
+    .auth-card h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 32px;
+      color: #102a43;
+    }
+    
+    .auth-subtitle {
+      margin: 10px 0 28px;
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+    }
+    
+    .google-login,
+    .email-login {
+      width: 100%;
+      min-height: 48px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    
+    .google-login {
+      border: 1px solid #d8e1e8;
+      background: #ffffff;
+      color: #102a43;
+    }
+    
+    .email-login {
+      margin-top: 14px;
+      border: 0;
+      background: #102a43;
+      color: #ffffff;
+    }
+    
+    .auth-divider {
+      margin: 24px 0;
+      text-align: center;
+      color: #64748b;
+      font-size: 12px;
+    }
+    
+    #email-login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    #email-login-form label {
+      font-size: 13px;
+      font-weight: 700;
+    }
+    
+    #login-email {
+      width: 100%;
+      min-height: 46px;
+      padding: 12px;
+      border: 1px solid #d8e1e8;
+      border-radius: 12px;
+      font: inherit;
+    }
+    
+    #auth-message {
+      min-height: 20px;
+      margin: 18px 0 0;
+      text-align: center;
+      font-size: 13px;
+      color: #17594c;
+    }
+
+    /* Controles de sesión */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logout-button {
+      padding: 10px 14px;
+      border: 1px solid #d8e1e8;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #102a43;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    
+    .logout-button:disabled,
+    .google-login:disabled,
+    .email-login:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+    
+    /* Ocultar elementos que tengan el atributo hidden */
+    #pyme-private[hidden],
+    #auth-screen[hidden] {
+      display: none;
+    }
+    
   </style>
 </head>
 
 <body>
+  
+<section class="auth-screen" id="auth-screen" hidden>
+  <div class="auth-card">
+    <h1>Primize</h1>
+    <p class="auth-subtitle">Accede a tu Panel Pyme</p>
 
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div>
-        <div class="brand">Primize</div>
-        <div class="brand-subtitle">Panel Pyme</div>
-      </div>
+    <button type="button" id="google-login" class="google-login">
+      Continuar con Google
+    </button>
 
-      <div class="avatar" aria-hidden="true">🏪</div>
-    </div>
-  </header>
+    <div class="auth-divider">o continúa con tu correo</div>
 
-  <main class="dashboard">
+    <form id="email-login-form">
+      <label for="login-email">Correo electrónico</label>
 
-    <section class="welcome">
-      <p>Bienvenido a Primize</p>
-      <h1>Gestiona tus promociones</h1>
-      <span>
-        Administra tu comercio y conecta con
-        nuevos clientes desde un solo lugar.
-      </span>
-    </section>
+      <input
+        type="email"
+        id="login-email"
+        placeholder="nombre@comercio.cl"
+        autocomplete="email"
+        required
+      >
 
-    <h2 class="section-title">Tu espacio de trabajo</h2>
-
-    <section class="dashboard-grid"
-             aria-label="Secciones del panel">
-
-      <button class="dashboard-card"
-              type="button"
-              data-section="Mi comercio">
-        <span class="card-icon" aria-hidden="true">🏪</span>
-        <span class="card-title">Mi comercio</span>
-        <span class="card-description">
-          Edita tu perfil, logo y dirección.
-        </span>
+      <button type="submit" class="email-login">
+        Enviar enlace de acceso
       </button>
+    </form>
 
-      <button class="dashboard-card"
-              type="button"
-              data-section="Promociones">
-        <span class="card-icon" aria-hidden="true">📣</span>
-        <span class="card-title">Promociones</span>
-        <span class="card-description">
-          Crea y administra tus ofertas.
-        </span>
-      </button>
-
-      <button class="dashboard-card"
-              type="button"
-              data-section="Estadísticas">
-        <span class="card-icon" aria-hidden="true">📊</span>
-        <span class="card-title">Estadísticas</span>
-        <span class="card-description">
-          Consulta tus resultados.
-        </span>
-      </button>
-
-      <button class="dashboard-card"
-              type="button"
-              data-section="Configuración">
-        <span class="card-icon" aria-hidden="true">⚙️</span>
-        <span class="card-title">Configuración</span>
-        <span class="card-description">
-          Gestiona tu cuenta y acceso.
-        </span>
-      </button>
-
-    </section>
-    
-    <section class="commerce-profile" id="commerce-profile" hidden>
-      <div class="profile-heading">
-        <h2>Mi comercio</h2>
-        <button type="button" id="back-to-dashboard">
-          ← Volver
-        </button>
-      </div>
-    
-      <form id="commerce-form">
-        <div class="profile-logo-section">
-          <div class="profile-logo-preview">
-            <img id="profile-logo-image" alt="Vista previa del logo" hidden>
-            <span id="profile-logo-placeholder" aria-hidden="true">🏪</span>
-          </div>
-    
-          <label for="commerce-logo" class="logo-upload-label">
-            Seleccionar logo
-          </label>
-    
-          <input
-            type="file"
-            id="commerce-logo"
-            accept="image/png,image/jpeg,image/webp"
-            hidden
-          >
-    
-          <p>PNG, JPG o WebP · Máximo 2 MB</p>
+    <p id="auth-message" role="status"></p>
+  </div>
+</section>
+  
+  <div id="pyme-private" hidden>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div>
+          <div class="brand">Primize</div>
+          <div class="brand-subtitle">Panel Pyme</div>
         </div>
-    
-        <label for="commerce-name">Nombre comercial</label>
-        <input
-          id="commerce-name"
-          type="text"
-          maxlength="100"
-          placeholder="Ej. Café Primize"
-          required
-        >
-    
-        <label for="commerce-category">Categoría</label>
-        <select id="commerce-category" required>
-          <option value="">Seleccionar categoría</option>
-          <option value="Gastronomía">Gastronomía</option>
-          <option value="Bar/Carrete">Bar / Carrete</option>
-          <option value="Tours/Aventura">Tours / Aventura</option>
-          <option value="Alojamiento">Alojamiento</option>
-          <option value="Otro">Otro</option>
-        </select>
-    
-        <label for="commerce-address">Dirección</label>
-        <input
-          id="commerce-address"
-          type="text"
-          placeholder="Calle, número y comuna"
-          required
-        >
-    
-        <label>Ubicación exacta</label>
-        <p class="map-help">
-          Arrastra el marcador hasta la ubicación de tu comercio.
-        </p>
-    
-        <div id="commerce-map" aria-label="Mapa para elegir ubicación"></div>
-    
-        <p class="coordinates" id="commerce-coordinates">
-          Ubicación pendiente de confirmar
-        </p>
-    
-        <label for="commerce-whatsapp">WhatsApp comercial</label>
-        <input
-          id="commerce-whatsapp"
-          type="tel"
-          placeholder="+56 9 1234 5678"
-        >
-    
-        <button type="submit" class="profile-save">
-          Revisar perfil
+
+        <div class="header-actions">
+          <div class="avatar" aria-hidden="true">🏪</div>
+
+          <button
+            type="button"
+            id="logout-button"
+            class="logout-button"
+          >
+            Salir
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard">
+  
+      <section class="welcome">
+        <p>Bienvenido a Primize</p>
+        <h1>Gestiona tus promociones</h1>
+        <span>
+          Administra tu comercio y conecta con
+          nuevos clientes desde un solo lugar.
+        </span>
+      </section>
+  
+      <h2 class="section-title">Tu espacio de trabajo</h2>
+  
+      <section class="dashboard-grid"
+               aria-label="Secciones del panel">
+  
+        <button class="dashboard-card"
+                type="button"
+                data-section="Mi comercio">
+          <span class="card-icon" aria-hidden="true">🏪</span>
+          <span class="card-title">Mi comercio</span>
+          <span class="card-description">
+            Edita tu perfil, logo y dirección.
+          </span>
         </button>
-    
-        <p class="profile-message" id="profile-message" role="status"></p>
-      </form>
-    </section>
-    
-    <div class="notice" id="panel-notice" role="status">
-      Estamos preparando tu panel.
-      Próximamente podrás gestionar tus datos
-      y promociones desde aquí.
-    </div>
-
-  </main>
-
-  <nav class="bottom-nav" aria-label="Navegación del panel">
-    <a href="pyme.html" class="nav-item active"
-       aria-current="page">
-      <span aria-hidden="true">🏠</span>
-      Inicio
-    </a>
-
-    <a href="#comercio" class="nav-item" data-section="Mi comercio">
-      <span aria-hidden="true">🏪</span>
-      Comercio
-    </a>
-
-    <a href="#promociones" class="nav-item" data-section="Promociones">
-      <span aria-hidden="true">📣</span>
-      Ofertas
-    </a>
-
-    <a href="#configuracion" class="nav-item" data-section="Configuración">
-      <span aria-hidden="true">⚙️</span>
-      Ajustes
-    </a>
-  </nav>
+  
+        <button class="dashboard-card"
+                type="button"
+                data-section="Promociones">
+          <span class="card-icon" aria-hidden="true">📣</span>
+          <span class="card-title">Promociones</span>
+          <span class="card-description">
+            Crea y administra tus ofertas.
+          </span>
+        </button>
+  
+        <button class="dashboard-card"
+                type="button"
+                data-section="Estadísticas">
+          <span class="card-icon" aria-hidden="true">📊</span>
+          <span class="card-title">Estadísticas</span>
+          <span class="card-description">
+            Consulta tus resultados.
+          </span>
+        </button>
+  
+        <button class="dashboard-card"
+                type="button"
+                data-section="Configuración">
+          <span class="card-icon" aria-hidden="true">⚙️</span>
+          <span class="card-title">Configuración</span>
+          <span class="card-description">
+            Gestiona tu cuenta y acceso.
+          </span>
+        </button>
+  
+      </section>
+      
+      <section class="commerce-profile" id="commerce-profile" hidden>
+        <div class="profile-heading">
+          <h2>Mi comercio</h2>
+          <button type="button" id="back-to-dashboard">
+            ← Volver
+          </button>
+        </div>
+      
+        <form id="commerce-form">
+          <div class="profile-logo-section">
+            <div class="profile-logo-preview">
+              <img id="profile-logo-image" alt="Vista previa del logo" hidden>
+              <span id="profile-logo-placeholder" aria-hidden="true">🏪</span>
+            </div>
+      
+            <label for="commerce-logo" class="logo-upload-label">
+              Seleccionar logo
+            </label>
+      
+            <input
+              type="file"
+              id="commerce-logo"
+              accept="image/png,image/jpeg,image/webp"
+              hidden
+            >
+      
+            <p>PNG, JPG o WebP · Máximo 2 MB</p>
+          </div>
+      
+          <label for="commerce-name">Nombre comercial</label>
+          <input
+            id="commerce-name"
+            type="text"
+            maxlength="100"
+            placeholder="Ej. Café Primize"
+            required
+          >
+      
+          <label for="commerce-category">Categoría</label>
+          <select id="commerce-category" required>
+            <option value="">Seleccionar categoría</option>
+            <option value="Gastronomía">Gastronomía</option>
+            <option value="Bar/Carrete">Bar / Carrete</option>
+            <option value="Tours/Aventura">Tours / Aventura</option>
+            <option value="Alojamiento">Alojamiento</option>
+            <option value="Otro">Otro</option>
+          </select>
+      
+          <label for="commerce-address">Dirección</label>
+          <input
+            id="commerce-address"
+            type="text"
+            placeholder="Calle, número y comuna"
+            required
+          >
+      
+          <label>Ubicación exacta</label>
+          <p class="map-help">
+            Arrastra el marcador hasta la ubicación de tu comercio.
+          </p>
+      
+          <div id="commerce-map" aria-label="Mapa para elegir ubicación"></div>
+      
+          <p class="coordinates" id="commerce-coordinates">
+            Ubicación pendiente de confirmar
+          </p>
+      
+          <label for="commerce-whatsapp">WhatsApp comercial</label>
+          <input
+            id="commerce-whatsapp"
+            type="tel"
+            placeholder="+56 9 1234 5678"
+          >
+      
+          <button type="submit" class="profile-save">
+            Revisar perfil
+          </button>
+      
+          <p class="profile-message" id="profile-message" role="status"></p>
+        </form>
+      </section>
+      
+      <div class="notice" id="panel-notice" role="status">
+        Estamos preparando tu panel.
+        Próximamente podrás gestionar tus datos
+        y promociones desde aquí.
+      </div>
+  
+    </main>
+  
+    <nav class="bottom-nav" aria-label="Navegación del panel">
+      <a href="pyme.html" class="nav-item active"
+         aria-current="page">
+        <span aria-hidden="true">🏠</span>
+        Inicio
+      </a>
+  
+      <a href="#comercio" class="nav-item" data-section="Mi comercio">
+        <span aria-hidden="true">🏪</span>
+        Comercio
+      </a>
+  
+      <a href="#promociones" class="nav-item" data-section="Promociones">
+        <span aria-hidden="true">📣</span>
+        Ofertas
+      </a>
+  
+      <a href="#configuracion" class="nav-item" data-section="Configuración">
+        <span aria-hidden="true">⚙️</span>
+        Ajustes
+      </a>
+    </nav>
+  </div>
   
   <script type="module">
     import * as L from "https://esm.sh/leaflet@1.9.4";
+
+    import {
+      supabase,
+      isSupabaseConfigured
+    } from "/js/supabase-client.js";
+
+    /* ==========================================
+       PRIMIZE - AUTENTICACIÓN PANEL PYME
+       ========================================== */
+    
+    const authScreen = document.querySelector("#auth-screen");
+    const privatePanel = document.querySelector("#pyme-private");
+    const googleLoginButton = document.querySelector("#google-login");
+    const emailLoginForm = document.querySelector("#email-login-form");
+    const loginEmail = document.querySelector("#login-email");
+    const authMessage = document.querySelector("#auth-message");
+    const logoutButton = document.querySelector("#logout-button");
+    
+    const authRedirectUrl =
+      `${window.location.origin}/pyme.html`;
+    
+    /* Mostrar mensaje de autenticación */
+    function setAuthMessage(text, isError = false) {
+      authMessage.textContent = text;
+      authMessage.style.color = isError
+        ? "#b42318"
+        : "#17594c";
+    }
+    
+    /* Mostrar pantalla de inicio de sesión */
+    function showLoginScreen() {
+      privatePanel.hidden = true;
+      authScreen.hidden = false;
+    }
+    
+    /* Mostrar panel después de iniciar sesión */
+    function showPrivatePanel() {
+      authScreen.hidden = true;
+      privatePanel.hidden = false;
+    }
+    
+    /* Bloquear temporalmente botones */
+    function setAuthLoading(loading) {
+      googleLoginButton.disabled = loading;
+      loginEmail.disabled = loading;
+    
+      const emailButton =
+        emailLoginForm.querySelector('button[type="submit"]');
+    
+      emailButton.disabled = loading;
+    }
+    
+    /* Acceso con Google */
+    googleLoginButton.addEventListener("click", async () => {
+      if (!supabase || !isSupabaseConfigured) {
+        setAuthMessage(
+          "Supabase no está configurado.",
+          true
+        );
+        return;
+      }
+    
+      setAuthLoading(true);
+      setAuthMessage("Conectando con Google...");
+    
+      try {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo: authRedirectUrl
+          }
+        });
+    
+        if (error) throw error;
+    
+      } catch (error) {
+        console.error("Error de acceso con Google:", error);
+        setAuthMessage(
+          "No se pudo iniciar sesión con Google.",
+          true
+        );
+      } finally {
+        setAuthLoading(false);
+      }
+    });
+    
+    /* Acceso mediante enlace por correo */
+    emailLoginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+    
+      if (!supabase || !isSupabaseConfigured) {
+        setAuthMessage(
+          "Supabase no está configurado.",
+          true
+        );
+        return;
+      }
+    
+      const email = loginEmail.value.trim();
+    
+      if (!email) {
+        setAuthMessage(
+          "Ingresa tu correo electrónico.",
+          true
+        );
+        return;
+      }
+    
+      setAuthLoading(true);
+      setAuthMessage("Enviando enlace de acceso...");
+    
+      try {
+        const { error } = await supabase.auth.signInWithOtp({
+          email,
+          options: {
+            emailRedirectTo: authRedirectUrl
+          }
+        });
+    
+        if (error) throw error;
+    
+        setAuthMessage(
+          "Si el correo puede recibir un enlace de acceso, " +
+          "revisa su bandeja de entrada."
+        );
+    
+      } catch (error) {
+        console.error("Error de Magic Link:", error);
+    
+        setAuthMessage(
+          "No se pudo enviar el enlace. " +
+          "Inténtalo nuevamente más tarde.",
+          true
+        );
+      } finally {
+        setAuthLoading(false);
+      }
+    });
+    
+    /* Cerrar sesión */
+    logoutButton.addEventListener("click", async () => {
+      if (!supabase) return;
+    
+      logoutButton.disabled = true;
+    
+      try {
+        const { error } = await supabase.auth.signOut();
+    
+        if (error) throw error;
+    
+        showLoginScreen();
+        setAuthMessage("Sesión cerrada correctamente.");
+    
+      } catch (error) {
+        console.error("Error al cerrar sesión:", error);
+        alert("No se pudo cerrar la sesión.");
+      } finally {
+        logoutButton.disabled = false;
+      }
+    });
+    
+    /* Escuchar cambios de autenticación */
+    if (supabase && isSupabaseConfigured) {
+      supabase.auth.onAuthStateChange((event, session) => {
+        if (session?.user) {
+          showPrivatePanel();
+        } else if (
+          event === "SIGNED_OUT" ||
+          event === "INITIAL_SESSION"
+        ) {
+          showLoginScreen();
+        }
+      });
+    }
+    
+    /* Comprobar sesión al abrir la página */
+    async function initializeAuth() {
+      if (!supabase || !isSupabaseConfigured) {
+        showLoginScreen();
+        setAuthMessage(
+          "No se pudo conectar con Supabase.",
+          true
+        );
+        return;
+      }
+    
+      try {
+        const { data, error } = await supabase.auth.getSession();
+    
+        if (error) throw error;
+    
+        if (data.session?.user) {
+          showPrivatePanel();
+        } else {
+          showLoginScreen();
+        }
+    
+      } catch (error) {
+        console.error("Error al comprobar sesión:", error);
+    
+        showLoginScreen();
+        setAuthMessage(
+          "No se pudo verificar la sesión.",
+          true
+        );
+      }
+    }
+    
+    initializeAuth();
+    
+    /* ==========================================
+       FIN DE AUTENTICACIÓN
+       ========================================== */
   
     const notice = document.querySelector("#panel-notice");
     const profile = document.querySelector("#commerce-profile");
