@@ -1134,7 +1134,22 @@
   
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-  
+     
+      if (!commerceLocationConfirmed) {
+        message.textContent =
+          "Debes confirmar la ubicación de tu comercio antes de continuar.";
+      
+        message.style.color = "#b42318";
+      
+        locationConfirmationMessage.textContent =
+          "Confirma la ubicación seleccionada en el mapa.";
+      
+        locationConfirmationMessage.style.color = "#b42318";
+      
+        confirmLocationButton.focus();
+        return;
+      }
+
       if (!form.reportValidity()) return;
   
       const position = commerceMarker?.getLatLng();
