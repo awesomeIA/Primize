@@ -985,6 +985,19 @@
     let commerceMap = null;
     let commerceMarker = null;
     let logoPreviewUrl = null;
+    
+    function resetCommerceLocationConfirmation() {
+      commerceLocationConfirmed = false;
+    
+      confirmLocationButton.classList.remove("confirmed");
+      confirmLocationButton.textContent =
+        "Confirmar ubicación del comercio";
+    
+      locationConfirmationMessage.textContent =
+        "Debes confirmar la ubicación antes de guardar.";
+    
+      locationConfirmationMessage.style.color = "#64748b";
+    }
   
     function showDashboard() {
       profile.hidden = true;
@@ -1028,14 +1041,16 @@
   
       commerceMarker = L.marker(initialPosition, {
         draggable: true
-      }).addTo(commerceMap);
-  
+      }).addTo(commerceMap);  
+      
       function updateCoordinates() {
         const position = commerceMarker.getLatLng();
-  
+      
         coordinatesLabel.textContent =
           `Latitud: ${position.lat.toFixed(6)} · ` +
           `Longitud: ${position.lng.toFixed(6)}`;
+      
+        resetCommerceLocationConfirmation();
       }
   
       commerceMarker.on("dragend", updateCoordinates);
@@ -1047,6 +1062,26 @@
   
       updateCoordinates();
     }
+    
+    confirmLocationButton.addEventListener("click", () => {
+      if (!commerceMarker) {
+        locationConfirmationMessage.textContent =
+          "Primero debes seleccionar una ubicación en el mapa.";
+    
+        locationConfirmationMessage.style.color = "#b42318";
+        return;
+      }
+    
+      commerceLocationConfirmed = true;
+    
+      confirmLocationButton.classList.add("confirmed");
+      confirmLocationButton.textContent = "Ubicación confirmada ✓";
+    
+      locationConfirmationMessage.textContent =
+        "Ubicación confirmada correctamente.";
+    
+      locationConfirmationMessage.style.color = "#16804a";
+    });
   
     document.querySelectorAll("[data-section]").forEach((element) => {
       element.addEventListener("click", (event) => {
